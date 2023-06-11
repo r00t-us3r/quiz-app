@@ -96,13 +96,13 @@ const Navigator = ({navigation}) => {
     return (
       <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-          <Icon name="cog" type="font-awesome" color="#00d7dc" style={{padding: 8}} />
-          <Text>Settings</Text>
+          <Icon name="cog" type="font-awesome" color="#777c8e" style={{padding: 8}} />
+          <Text style={{color: '#777c8e'}}>Settings</Text>
         </View>
         <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+            <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" color="#777c8e" />
           {/*<Icon name="fa-right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />*/}
-          <Text>Log Out</Text>
+          <Text style={{color: '#777c8e'}}>Log Out</Text>
         </View>
       </View>
     )
