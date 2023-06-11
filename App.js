@@ -100,7 +100,7 @@ const Navigator = ({navigation}) => {
           <Text>Settings</Text>
         </View>
         <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <FontAwesomeIcon icon={faCaretSquareRight} />
+            <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
           {/*<Icon name="fa-right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />*/}
           <Text>Log Out</Text>
         </View>
