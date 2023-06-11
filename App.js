@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import {
   ActivityIndicator,
-  Button,
-  Image,
+  Button, FlatList,
+  Image, ListView,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -36,7 +36,7 @@ import {AppStack} from "./src/stacks/AppStack";
 
 import {Settings} from "react-native-fbsdk-next"
 import {useEffect} from "react";
-import {createDrawerNavigator} from "@react-navigation/drawer";
+import {createDrawerNavigator, DrawerItemList} from "@react-navigation/drawer";
 
 function SplashScreen() {
   return (
@@ -69,6 +69,37 @@ const Navigator = ({navigation}) => {
   if (authState.isLoading) {
     return <SplashScreen />;
   }
+
+  const HeaderComponent = (item) => {
+      return (
+          <>
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24}}>
+              <Image source={require('./assets/icon.png')} style={{borderRadius: 50, height: 64, marginTop: 24, width: 64}} />
+              <Icon name="times" type="font-awesome" color="#00d7dc" style={{padding: 8}} />
+            </View>
+            <View style={{padding: 24}}>
+              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>Hanna Fields</Text>
+              <Text style={{color: '#9da0a6'}}>29,848 Coins</Text>
+            </View>
+          </>
+      )
+  }
+
+  const FooterComponent = () => {
+    return (
+      <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+          <Icon name="cog" type="font-awesome" color="#00d7dc" style={{padding: 8}} />
+          <Text>Settings</Text>
+        </View>
+        <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+          <Icon name="right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />
+          <Text>Log Out</Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <BottomSheetModalProvider>
       <SafeAreaView
@@ -76,6 +107,15 @@ const Navigator = ({navigation}) => {
         {/*<Stack.Navigator>{AuthStack()}</Stack.Navigator>*/}
         <NavigationContainer>
           <Drawer.Navigator
+              drawerContent={(props) => (
+                  <View style={{backgroundColor: '#3c4255', height: '100%'}}>
+                    <HeaderComponent />
+                    {/*<DrawerItemList {...props} />*/}
+                    <View style={{marginTop: 'auto'}}>
+                      <FooterComponent />
+                    </View>
+                  </View>
+              )}
               initialRouteName={"Settings"} screenOptions={{
             color: "white",
             drawerPosition: 'left',

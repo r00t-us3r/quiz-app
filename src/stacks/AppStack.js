@@ -10,30 +10,33 @@ import {GameOverScreen} from "../screens/app/GameOverScreen";
 import {EarnCoinsScreen} from "../screens/app/EarnCoinsScreen";
 import {QuizesScreen} from "../screens/app/QuizesScreen";
 import {QuizScreen} from "../screens/app/QuizScreen";
+import {Text, View} from "react-native";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const AppStack = () => {
     return (
-        <Drawer.Group>
+        <Drawer.Group screenOptions={{
+                drawerType: 'front'
+            }}>
             {/* Main Screen */}
-            <Drawer.Screen component={QuizesScreen} name="QuizList" />
+            <Drawer.Screen component={QuizesScreen} name="Quizes" />
 
             {/* Sub-screens */}
-            <Drawer.Screen component={ChatsScreen} name="ChatList" />
-            <Drawer.Screen component={EarnCoinsScreen} name="EarnCoins" />
+            <Drawer.Screen component={ChatsScreen} name="Chats" />
+            <Drawer.Screen component={EarnCoinsScreen} name="Earn Coins" />
             <Drawer.Screen component={LeaderboardScreen} name="Leaderboard" />
             <Drawer.Screen component={NotificationsScreen} name="Notifications" />
             <Drawer.Screen component={ProfileScreen} name="Profile" />
             <Drawer.Screen component={SettingsScreen} name="Settings" />
 
             {/* View Chat */}
-            <Drawer.Screen component={ChatViewScreen} name="ViewChat" />
+            <Drawer.Screen component={ChatViewScreen} name="Chat" />
 
             {/* Quizes */}
-            <Drawer.Screen component={QuizScreen} name="ViewQuiz" />
-            <Drawer.Screen component={GameOverScreen} name="GameOver" />
+            <Drawer.Screen component={QuizScreen} name="Quiz" />
+            <Drawer.Screen component={GameOverScreen} name="Game Over" />
         </Drawer.Group>
     )
 }
