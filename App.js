@@ -38,6 +38,13 @@ import {Settings} from "react-native-fbsdk-next"
 import {useEffect} from "react";
 import {createDrawerNavigator, DrawerItemList} from "@react-navigation/drawer";
 
+
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+library.add(fas);
+
+
 function SplashScreen() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -93,7 +100,8 @@ const Navigator = ({navigation}) => {
           <Text>Settings</Text>
         </View>
         <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-          <Icon name="right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />
+            <FontAwesomeIcon icon={faCaretSquareRight} />
+          {/*<Icon name="fa-right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />*/}
           <Text>Log Out</Text>
         </View>
       </View>
