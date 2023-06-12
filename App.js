@@ -19,7 +19,7 @@ import { Icon } from "@rneui/base";
 import {LoginScreen} from "./src/screens/auth/LoginScreen";
 import {AuthStack} from "./src/stacks/AuthStack";
 import {createStackNavigator} from "@react-navigation/stack";
-import {createNavigationContainerRef, DrawerActions, NavigationContainer} from '@react-navigation/native';
+import {createNavigationContainerRef, DrawerActions, NavigationContainer, useRoute} from '@react-navigation/native';
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
@@ -44,6 +44,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {HeaderComponent} from "./src/components/drawer/HeaderComponent";
 import {FooterComponent} from "./src/components/drawer/FooterComponent";
+import {DrawerItemsComponent} from "./src/components/drawer/DrawerItemsComponent";
 library.add(fas);
 
 
@@ -81,19 +82,19 @@ export function closeDrawer() {
   }
 }
 
+export function getRouteName() {
+    if (navigationRef.isReady()) {
+        return navigationRef.current.getCurrentRoute().name;
+    }
+}
+
 const Navigator = ({navigation}) => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    console.log(authState);
-  }, [authState])
-
   if (authState.isLoading) {
     return <SplashScreen />;
   }
-
-  console.log(navigation);
 
   return (
     <BottomSheetModalProvider>
@@ -106,27 +107,30 @@ const Navigator = ({navigation}) => {
                   <View style={{backgroundColor: '#3c4255', height: '100%'}}>
                     <HeaderComponent />
                     {/*<DrawerItemList {...props} />*/}
+                    <DrawerItemsComponent />
                     <View style={{marginTop: 'auto'}}>
                       <FooterComponent />
                     </View>
                   </View>
               )}
-              initialRouteName={"QuizList"} screenOptions={{
-            color: "white",
-            swipeEnabled: false,
-            drawerPosition: 'left',
-            drawerStyle: {
-              backgroundColor: 'white',
-              zIndex: 100
-            },
-            headerShadowVisible: false,
-            headerStyle: {
-              backgroundColor: '#3b404e',
-              borderBottomWidth: 0,
-            },
-            headerStatusBarHeight: 0,
-            headerTintColor: "white",
-          }}>
+              initialRouteName={"QuizList"}
+              screenOptions={{
+                color: "white",
+                swipeEnabled: false,
+                drawerPosition: 'left',
+                drawerStyle: {
+                  backgroundColor: 'white',
+                    width: '100%',
+                  zIndex: 100
+                },
+                headerShadowVisible: false,
+                headerStyle: {
+                  backgroundColor: '#3b404e',
+                  borderBottomWidth: 0,
+                },
+                headerStatusBarHeight: 0,
+                headerTintColor: "white",
+              }}>
             {authState.userToken ? AppStack() : AuthStack()}
           </Drawer.Navigator>
         </NavigationContainer>

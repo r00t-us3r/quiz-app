@@ -21,22 +21,22 @@ export const AppStack = () => {
                 drawerType: 'front'
             }}>
             {/* Main Screen */}
-            <Drawer.Screen component={QuizesScreen} name="Quizes" />
+            <Drawer.Screen component={QuizesScreen} name="QuizList" options={{headerTitle: 'Quiz List'}} />
 
             {/* Sub-screens */}
-            <Drawer.Screen component={ChatsScreen} name="Chats" />
-            <Drawer.Screen component={EarnCoinsScreen} name="Earn Coins" />
-            <Drawer.Screen component={LeaderboardScreen} name="Leaderboard" />
-            <Drawer.Screen component={NotificationsScreen} name="Notifications" />
-            <Drawer.Screen component={ProfileScreen} name="Profile" />
-            <Drawer.Screen component={SettingsScreen} name="Settings" />
+            <Drawer.Screen component={ChatsScreen} name="ChatList" options={{headerTitle: 'Chat List'}} />
+            <Drawer.Screen component={EarnCoinsScreen} name="EarnCoins" options={{headerTitle: 'Earn Coins'}} />
+            <Drawer.Screen component={LeaderboardScreen} name="Leaderboard" options={{headerTitle: 'Leaderboard'}} />
+            <Drawer.Screen component={NotificationsScreen} name="Notifications" options={{headerTitle: 'Notifications'}} />
+            <Drawer.Screen component={ProfileScreen} name="Profile" options={{headerTitle: 'Profile'}} />
+            <Drawer.Screen component={SettingsScreen} name="Settings" options={{headerTitle: 'Settings'}} />
 
             {/* View Chat */}
-            <Drawer.Screen component={ChatViewScreen} name="Chat" />
+            <Drawer.Screen component={ChatViewScreen} name="Chat" options={{headerTitle: 'Chat List'}} />
 
             {/* Quizes */}
-            <Drawer.Screen component={QuizScreen} name="Quiz" />
-            <Drawer.Screen component={GameOverScreen} name="Game Over" />
+            <Drawer.Screen component={QuizScreen} name="Quiz" options={{headerTitle: 'Quiz'}} />
+            <Drawer.Screen component={GameOverScreen} name="Game Over" options={{headerTitle: 'Game Over'}} />
         </Drawer.Group>
     )
 }
