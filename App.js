@@ -19,7 +19,7 @@ import { Icon } from "@rneui/base";
 import {LoginScreen} from "./src/screens/auth/LoginScreen";
 import {AuthStack} from "./src/stacks/AuthStack";
 import {createStackNavigator} from "@react-navigation/stack";
-import { NavigationContainer } from '@react-navigation/native';
+import {createNavigationContainerRef, DrawerActions, NavigationContainer} from '@react-navigation/native';
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
@@ -42,6 +42,8 @@ import {createDrawerNavigator, DrawerItemList} from "@react-navigation/drawer";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import {HeaderComponent} from "./src/components/drawer/HeaderComponent";
+import {FooterComponent} from "./src/components/drawer/FooterComponent";
 library.add(fas);
 
 
@@ -65,6 +67,20 @@ const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
+export const navigationRef = createNavigationContainerRef()
+
+export function navigate(name, params) {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+}
+
+export function closeDrawer() {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(DrawerActions.toggleDrawer());
+  }
+}
+
 const Navigator = ({navigation}) => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
@@ -77,43 +93,14 @@ const Navigator = ({navigation}) => {
     return <SplashScreen />;
   }
 
-  const HeaderComponent = (item) => {
-      return (
-          <>
-            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 24}}>
-              <Image source={require('./assets/icon.png')} style={{borderRadius: 50, height: 64, marginTop: 24, width: 64}} />
-              <Icon name="times" type="font-awesome" color="#00d7dc" style={{padding: 8}} />
-            </View>
-            <View style={{padding: 24}}>
-              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>Hanna Fields</Text>
-              <Text style={{color: '#9da0a6'}}>29,848 Coins</Text>
-            </View>
-          </>
-      )
-  }
-
-  const FooterComponent = () => {
-    return (
-      <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-          <Icon name="cog" type="font-awesome" color="#777c8e" style={{padding: 8}} />
-          <Text style={{color: '#777c8e'}}>Settings</Text>
-        </View>
-        <View style={{alignContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" color="#777c8e" />
-          {/*<Icon name="fa-right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />*/}
-          <Text style={{color: '#777c8e'}}>Log Out</Text>
-        </View>
-      </View>
-    )
-  }
+  console.log(navigation);
 
   return (
     <BottomSheetModalProvider>
       <SafeAreaView
           style={{ flex: 1, margin: 0, padding: 0, backgroundColor: "" }}>
         {/*<Stack.Navigator>{AuthStack()}</Stack.Navigator>*/}
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Drawer.Navigator
               drawerContent={(props) => (
                   <View style={{backgroundColor: '#3c4255', height: '100%'}}>
@@ -124,8 +111,9 @@ const Navigator = ({navigation}) => {
                     </View>
                   </View>
               )}
-              initialRouteName={"Settings"} screenOptions={{
+              initialRouteName={"QuizList"} screenOptions={{
             color: "white",
+            swipeEnabled: false,
             drawerPosition: 'left',
             drawerStyle: {
               backgroundColor: 'white',
