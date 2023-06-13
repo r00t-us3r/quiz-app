@@ -35,7 +35,7 @@ import { Store } from "./src/redux/Store";
 import {AppStack} from "./src/stacks/AppStack";
 
 import {Settings} from "react-native-fbsdk-next"
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {createDrawerNavigator, DrawerItemList} from "@react-navigation/drawer";
 
 
@@ -45,10 +45,65 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {HeaderComponent} from "./src/components/drawer/HeaderComponent";
 import {FooterComponent} from "./src/components/drawer/FooterComponent";
 import {DrawerItemsComponent} from "./src/components/drawer/DrawerItemsComponent";
+import DB from "./src/realm/DB";
+import {superBase} from "./src/services/superBase";
+import {setLoading} from "./src/redux/slices/AuthSlice";
 library.add(fas);
 
 
 function SplashScreen() {
+
+  const [quizes, setQuizes] = useState([])
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    const getQuizesFromLocal = () => {
+      console.log('fetch local quizes');
+      return DB.objects("Quiz");
+    }
+
+    const loadRemoteQuizes = async () => {
+      console.log('fetch remote quizes');
+      const {data, error} = await superBase.from('quizes')
+          .select('*');
+      return data;
+    }
+
+    if (quizes.length === 0) {
+      const quizs = getQuizesFromLocal();
+      if (quizs.length === 0) {
+        loadRemoteQuizes().then((resp) => {
+          console.log('store remote quizes');
+          console.log(resp);
+          resp.forEach(quiz => {
+            DB.write(() => {
+              DB.create("Quiz", {
+                id: quiz.id,
+                name: quiz.name,
+                description: quiz.description,
+                unlockCost: quiz.unlockCost,
+                unlocked: quiz.unlocked,
+                image: quiz.image,
+              })
+            })
+          })
+          console.log('ui::setQuizesList::fromNewlyStored');
+          setQuizes(getQuizesFromLocal());
+          dispatch(setLoading({loading: true}))
+        })
+      } else {
+        console.log('ui::setCategoriesList::fromLocal');
+        setQuizes(quizs);
+        dispatch(setLoading({loading: true}))
+      }
+    } else {
+      dispatch(setLoading({loading: true}))
+    }
+  }, [quizes]);
+
+
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text
