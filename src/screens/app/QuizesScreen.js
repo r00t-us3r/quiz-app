@@ -5,27 +5,50 @@ export const QuizesScreen = ({navigation}) => {
 
     const items = [
         {
-            title: 'test'
+            title: 'Art & Design',
+            description: 'Fusce vehicula dolor arcu, sit amet blandit dolor'
         },
         {
-            title: 'test 1'
+            title: 'Science',
+            description: 'Lorem ipsum dolor sit amet.'
         },
         {
-            title: 'test 2'
+            title: 'Sports',
+            description: 'Lorem ipsum dolor sit amet.'
         },
         {
-            title: 'test 3'
+            title: 'Technology',
+            description: 'Lorem ipsum dolor sit amet.'
         },
         {
-            title: 'test 4'
+            title: 'Media Studies',
+            description: 'Lorem ipsum dolor sit amet.'
         },
     ];
 
+    const screenHeight = Dimensions.get('window').height;
+    const screenWidth = Dimensions.get('window').width;
+
+    const dimensions = {
+      cardHeight: (screenHeight / 2) + (screenHeight / 4),
+      cardWidth: screenWidth / 2 + (screenWidth / 3),
+      marginHorizontal: (screenWidth - ((screenWidth / 2) + (screenWidth / 4))) / 3
+    }
+    console.log('===========');
+    console.log('dimensions');
+    console.log('===========');
+    console.log('screen height: ' + screenHeight);
+    console.log('card height: ' + dimensions.cardHeight);
+    console.log('screen width: ' + screenWidth);
+    console.log('card width: ' + dimensions.cardWidth);
+    console.log('total card margin: ' + dimensions.marginHorizontal*2)
+
     const ListItem = ({item}) => {
         return (
-            <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', borderRadius: 4, height: (Dimensions.get('window').height / 3), marginHorizontal: (Dimensions.get('window').width / 2) / 2, width: (Dimensions.get('window').width / 2)}}>
-                <Image source={require('../../../assets/colored-pencils-guide-for-beginners-and-artists.jpg')} style={{alignSelf: 'flex-start', width: '100%', height: '60%'}} />
-                <Text>{item.title}</Text>
+            <View style={{backgroundColor: 'white', borderRadius: 8, height: dimensions.cardHeight, marginHorizontal: dimensions.marginHorizontal, width: dimensions.cardWidth}}>
+                <Image source={require('../../../assets/colored-pencils-guide-for-beginners-and-artists.jpg')} style={{alignSelf: 'flex-start', borderTopLeftRadius: 8, borderTopRightRadius: 8, height: '50%', width: '100%'}} />
+                <Text style={{color: '#2e313c', fontFamily: 'Rubik-Regular', fontSize: 36, paddingTop: 20, textAlign: 'center'}}>{item.title}</Text>
+                <Text style={{color: '#2e313c', fontFamily: 'Rubik-Light', fontSize: 22, paddingBottom: 20, paddingHorizontal: 20, paddingTop: 10, textAlign: 'center'}}>{item.description}</Text>
                 <LinearGradient
                     colors={['#00ebcf', '#00beec']}
                     start={{ x: 0, y: 0.5 }}
@@ -34,15 +57,17 @@ export const QuizesScreen = ({navigation}) => {
                     style={{
                         alignContent: 'center',
                         alignItems: 'center',
-                        borderRadius: 24,
-                        justifyContent: 'flex-end',
+                        borderRadius: 50,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginHorizontal: '10%',
                         padding: 12,
                         width: '80%'
                     }}
                 >
-                    <TouchableOpacity>
-                        <Text>Unlock Quiz</Text>
-                        <Text>250 Coins</Text>
+                    <TouchableOpacity style={{alignContent: 'center', display: 'flex', justifyContent: 'center'}}>
+                        <Text style={{color: 'white', fontFamily: 'Rubik-Medium', fontSize: 24, textAlign: 'center'}}>Unlock Quiz</Text>
+                        <Text style={{color: 'white', fontFamily: 'Rubik-Light', fontSize: 16, textAlign: 'center'}}>250 Coins</Text>
                     </TouchableOpacity>
                 </LinearGradient>
             </View>
@@ -59,18 +84,16 @@ export const QuizesScreen = ({navigation}) => {
     return (
         <View style={{ alignItems: 'center', backgroundColor: '#3c4255', display: 'flex', flexGrow: 1, justifyContent: 'center' }}>
             <Text style={{color: '#9d9fa4', fontSize: 16}}>Choose Your Path</Text>
-            <ScrollView horizontal snapToInterval={Dimensions.get('window').width} snapToAlignment={'center'} decelerationRate={0} centerContent={true} contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}>
-                <ListItem item={{title: 'test 1'}} />
-                <ListItem item={{title: 'test 2'}} />
-                <ListItem item={{title: 'test 3'}} />
-                <ListItem item={{title: 'test 4'}} />
-                <ListItem item={{title: 'test 5'}} />
-                <ListItem item={{title: 'test 6'}} />
-                <ListItem item={{title: 'test 7'}} />
-                <ListItem item={{title: 'test 8'}} />
-                <ListItem item={{title: 'test 9'}} />
-                <ListItem item={{title: 'test 10'}} />
-            </ScrollView>
+            <FlatList
+              horizontal
+              pagingEnabled={false}
+              snapToInterval={screenWidth}
+              snapToAlignment={'center'}
+              decelerationRate={0}
+              centerContent={true}
+              contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
+              data={items}
+              renderItem={ListItem} />
         </View>
 
         // <FlatList contentContainerStyle={{alignContent: 'center', alignItems: 'center', height: '100%'}} data={items} horizontal={true} initialNumToRender={1} renderItem={ListItem} />

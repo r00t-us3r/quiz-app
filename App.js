@@ -146,6 +146,29 @@ export default function App() {
     Outfit_600SemiBold,
     Outfit_700Bold,
     Outfit_800ExtraBold,
+
+    // theme fonts
+
+    // Karla
+    'Karla-700': require('./assets/fonts/Karla700.ttf'),
+    'Karla-700-italic': require('./assets/fonts/Karla700italic.ttf'),
+    'Karla-Italic': require('./assets/fonts/Karlaitalic.ttf'),
+    'Karla-Regular': require('./assets/fonts/Karlaregular.ttf'),
+    // Poppins
+    'Poppins-600': require('./assets/fonts/Poppins600.ttf'),
+    'Poppins-700': require('./assets/fonts/Poppins700.ttf'),
+    'Poppins-Regular': require('./assets/fonts/Poppinsregular.ttf'),
+    // Rubik
+    'Rubik-Black': require('./assets/fonts/Rubik-Black.ttf'),
+    'Rubik-BlackItalic': require('./assets/fonts/Rubik-BlackItalic.ttf'),
+    'Rubik-Bold': require('./assets/fonts/Rubik-Bold.ttf'),
+    'Rubik-BoldItalic': require('./assets/fonts/Rubik-BoldItalic.ttf'),
+    'Rubik-Italic': require('./assets/fonts/Rubik-Italic.ttf'),
+    'Rubik-Light': require('./assets/fonts/Rubik-Light.ttf'),
+    'Rubik-LightItalic': require('./assets/fonts/Rubik-LightItalic.ttf'),
+    'Rubik-Medium': require('./assets/fonts/Rubik-Medium.ttf'),
+    'Rubik-MediumItalic': require('./assets/fonts/Rubik-MediumItalic.ttf'),
+    'Rubik-Regular': require('./assets/fonts/Rubik-Regular.ttf'),
   });
 
   if (!fontsLoaded) {
