@@ -16,12 +16,13 @@ import FBLoginButton from "react-native-fbsdk-next/src/FBLoginButton";
 import {SafeAreaContext, SafeAreaProvider} from "react-native-safe-area-context";
 
 import { Icon } from "@rneui/base";
+import FlashMessage from "react-native-flash-message";
 import {LoginScreen} from "./src/screens/auth/LoginScreen";
 import {AuthStack} from "./src/stacks/AuthStack";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createNavigationContainerRef, DrawerActions, NavigationContainer, useRoute} from '@react-navigation/native';
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet";
-import {Provider, useDispatch, useSelector} from "react-redux";
+import {Provider} from "react-redux";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {
   Outfit_400Regular,
@@ -35,7 +36,7 @@ import { Store } from "./src/redux/Store";
 import {AppStack} from "./src/stacks/AppStack";
 
 import {Settings} from "react-native-fbsdk-next"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {createDrawerNavigator, DrawerItemList} from "@react-navigation/drawer";
 
 
@@ -47,15 +48,14 @@ import {FooterComponent} from "./src/components/drawer/FooterComponent";
 import {DrawerItemsComponent} from "./src/components/drawer/DrawerItemsComponent";
 import DB from "./src/realm/DB";
 import {superBase} from "./src/services/superBase";
-import {setLoading} from "./src/redux/slices/AuthSlice";
+import {AuthContext, AuthProvider} from "./src/providers/AuthProvider";
 library.add(fas);
 
 
 function SplashScreen() {
 
   const [quizes, setQuizes] = useState([])
-  const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getQuizesFromLocal = () => {
@@ -90,15 +90,15 @@ function SplashScreen() {
           })
           console.log('ui::setQuizesList::fromNewlyStored');
           setQuizes(getQuizesFromLocal());
-          dispatch(setLoading({loading: true}))
+          setLoading(true);
         })
       } else {
         console.log('ui::setCategoriesList::fromLocal');
         setQuizes(quizs);
-        dispatch(setLoading({loading: true}))
+        setLoading(true);
       }
     } else {
-      dispatch(setLoading({loading: true}))
+      setLoading(true);
     }
   }, [quizes]);
 
@@ -144,11 +144,14 @@ export function getRouteName() {
 }
 
 const Navigator = ({navigation}) => {
-  const dispatch = useDispatch();
-  const authState = useSelector((state) => state.auth);
 
-  if (authState.isLoading) {
-    return <SplashScreen />;
+  const auth = useContext(AuthContext);
+  const user = auth.user;
+
+  if (user == null) {
+    return (
+        <SplashScreen />
+    );
   }
 
   return (
@@ -186,7 +189,7 @@ const Navigator = ({navigation}) => {
                 headerStatusBarHeight: 0,
                 headerTintColor: "white",
               }}>
-            {authState.userToken ? AppStack() : AuthStack()}
+            {user ? AppStack() : AuthStack()}
           </Drawer.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -235,11 +238,11 @@ export default function App() {
   return (
     // <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1, backgroundColor: "#3b404e" }}>
-        <Provider store={Store}>
+        <AuthProvider>
           <Navigator style={styles.container} />
-        </Provider>
+        </AuthProvider>
         <StatusBar style="light" />
-        {/*<FlashMessage position="top" duration={3500} />*/}
+        <FlashMessage position="top" duration={3500} />
       </GestureHandlerRootView>
     // </SafeAreaProvider>
   );

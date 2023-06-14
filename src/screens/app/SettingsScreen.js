@@ -1,15 +1,11 @@
 import {StyleSheet, Text, Touchable, TouchableOpacity, View} from "react-native";
 import {Icon} from "@rneui/base";
 import {DrawerActions} from "@react-navigation/native";
-import {signOut} from "../../redux/slices/AuthSlice";
-import {useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 
 import { useDrawerStatus } from '@react-navigation/drawer';
 
 export const SettingsScreen = ({ navigation }) => {
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         navigation.setOptions({
