@@ -15,7 +15,10 @@ export const FooterComponent = ({navigation}) => {
         <Icon name="cog" type="font-awesome" color="#777c8e" style={{padding: 8}} />
         <Text style={{color: '#777c8e', padding: 8}}>Settings</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{alignContent: 'center', alignItems: 'center', borderLeftWidth: 0.5, borderLeftColor: '#50576d', flexDirection: 'row', flexGrow: 0.5, justifyContent: 'center'}} onPress={() => superBase.auth.signOut()}>
+      <TouchableOpacity style={{alignContent: 'center', alignItems: 'center', borderLeftWidth: 0.5, borderLeftColor: '#50576d', flexDirection: 'row', flexGrow: 0.5, justifyContent: 'center'}} onPress={() => {
+          RootApp.closeDrawer();
+          superBase.auth.signOut()
+      }}>
         <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" color="#777c8e"/>
         {/*<Icon name="fa-right-from-bracket" type="font-awesome-5" color="#00d7dc" style={{padding: 8}} />*/}
         <Text style={{color: '#777c8e', padding: 8}}>Log Out</Text>

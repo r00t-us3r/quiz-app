@@ -8,6 +8,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@backdrop-photo/react-native-otp-input": "github:backdrop-photo/otp-input",
     "@expo-google-fonts/outfit": "^0.2.3",
     "@expo/vector-icons": "^13.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",

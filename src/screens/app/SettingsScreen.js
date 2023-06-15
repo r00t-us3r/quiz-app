@@ -4,6 +4,7 @@ import {DrawerActions} from "@react-navigation/native";
 import {useEffect, useState} from "react";
 
 import { useDrawerStatus } from '@react-navigation/drawer';
+import {superBase} from "../../services/superBase";
 
 export const SettingsScreen = ({ navigation }) => {
 
@@ -18,7 +19,7 @@ export const SettingsScreen = ({ navigation }) => {
     }, [])
 
     const logout = () => {
-        dispatch(signOut());
+        superBase.auth.signOut();
     }
 
     return (

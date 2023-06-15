@@ -62,7 +62,7 @@ export const RegisterScreen = ({navigation: navigation}) => {
                         type: 'danger',
                     });
                 } else {
-                    RootApp.navigate("EmailConfirmation", {
+                    RootApp.navigate("OTPVerify", {
                         registerUsername,
                         registerPassword,
                         signUpResponse: data
@@ -97,11 +97,11 @@ export const RegisterScreen = ({navigation: navigation}) => {
                 </View>
                 <View style={{paddingVertical: 12}}>
                     <Text style={{color: '#b1b3b9', fontFamily: 'Rubik-Light', fontSize: 15, width: '100%'}}>Password</Text>
-                    <TextInput placeholder={"Enter your new password"} onChangeText={setRegisterPassword} placeholderTextColor={"#626775"} secureTextEntry={true} style={{borderBottomColor: '#626775', borderBottomWidth: 2, color: 'white', fontFamily: 'Rubik-Regular', fontSize: 18, fontWeight: 'bold', paddingVertical: 12}} textContentType={"password"} value={registerPassword} />
+                    <TextInput autoComplete={"off"} placeholder={"Enter your new password"} onChangeText={setRegisterPassword} placeholderTextColor={"#626775"} secureTextEntry={true} style={{borderBottomColor: '#626775', borderBottomWidth: 2, color: 'white', fontFamily: 'Rubik-Regular', fontSize: 18, fontWeight: 'bold', paddingVertical: 12}} textContentType={"password"} value={registerPassword} />
                 </View>
                 <View style={{paddingVertical: 12}}>
                     <Text style={{color: '#b1b3b9', fontFamily: 'Rubik-Light', fontSize: 15, width: '100%'}}>Password</Text>
-                    <TextInput placeholder={"Confirm your new password"} onChangeText={setConfirmRegisterPassword} placeholderTextColor={"#626775"} secureTextEntry={true} style={{borderBottomColor: '#626775', borderBottomWidth: 2, color: 'white', fontFamily: 'Rubik-Regular', fontSize: 18, fontWeight: 'bold', paddingVertical: 12}} textContentType={"password"} value={confirmRegisterPassword} />
+                    <TextInput autoComplete={"off"} placeholder={"Confirm your new password"} onChangeText={setConfirmRegisterPassword} placeholderTextColor={"#626775"} secureTextEntry={true} style={{borderBottomColor: '#626775', borderBottomWidth: 2, color: 'white', fontFamily: 'Rubik-Regular', fontSize: 18, fontWeight: 'bold', paddingVertical: 12}} textContentType={"password"} value={confirmRegisterPassword} />
                 </View>
             </View>
             <>
