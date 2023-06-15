@@ -86,7 +86,7 @@ export const QuizesScreen = ({navigation}) => {
 
     return (
         <View style={{ alignItems: 'center', backgroundColor: '#3c4255', display: 'flex', flexGrow: 1, justifyContent: 'center' }}>
-            <Text style={{color: '#9d9fa4', fontSize: 16}}>Choose Your Path {items.length}</Text>
+            <Text style={{color: '#9d9fa4', fontSize: 16, marginTop: 24}}>Choose Your Path</Text>
             <FlatList
                 data={items}
                 keyExtractor={(item, index) => index}
