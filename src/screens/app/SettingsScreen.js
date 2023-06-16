@@ -14,6 +14,7 @@ export const SettingsScreen = ({ navigation }) => {
 
     const [loading, setLoading] = useState(false);
     const [loadingText, setLoadingText] = useState("Processing");
+    const [currentUser, setCurrentUser] = useState({});
 
     useEffect(() => {
         if (!loading) {
@@ -28,6 +29,10 @@ export const SettingsScreen = ({ navigation }) => {
                     <Icon name="bars" type="font-awesome" color="#00e4d4" style={{padding: 8}} />
                 </TouchableOpacity>
             ),
+        })
+
+        superBase.auth.getUser().then((user) => {
+            setCurrentUser(user.data);
         })
     }, [])
 
@@ -91,7 +96,7 @@ export const SettingsScreen = ({ navigation }) => {
                                 <Icon name="envelope" type="font-awesome" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
                                 <View style={styles.settingsItemTextContainer}>
                                     <Text style={styles.settingsItemTitle}>Update Email Address</Text>
-                                    <Text style={styles.settingsItemSubTitle}>hannafields@email.com</Text>
+                                    <Text style={styles.settingsItemSubTitle}>{currentUser.user.email}</Text>
                                 </View>
                                 <View style={styles.settingsItemChevronContainer}>
                                     <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />

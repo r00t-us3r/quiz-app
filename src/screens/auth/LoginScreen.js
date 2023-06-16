@@ -2,7 +2,7 @@ import {
     ActivityIndicator,
     Dimensions,
     Image,
-    ImageBackground,
+    ImageBackground, Linking,
     StyleSheet,
     Text,
     TextInput,
@@ -25,20 +25,24 @@ export const LoginScreen = ({navigation: navigation}) => {
     const [loginUsername, setLoginUsername] = useState(uuid().toString() + "@deancole.info")
     const [loginPassword, setLoginPassword] = useState("")
 
-    const continueWithFacebook = () => {
-        LoginManager.logInWithPermissions(["public_profile"]).then((result) => {
-            if (result.isCancelled) {
-                console.log('Login cancelled by user"');
-            } else {
-                console.log(
-                    "Login success with permissions: " +
-                    result.grantedPermissions.toString()
-                )
-            }
-        },
-        (error) => {
-            console.log('Login fail with error: ' + error);
+    const continueWithFacebook = async () => {
+        // LoginManager.logInWithPermissions(["public_profile"]).then((result) => {
+        //     if (result.isCancelled) {
+        //         console.log('Login cancelled by user"');
+        //     } else {
+        //         console.log(
+        //             "Login success with permissions: " +
+        //             result.grantedPermissions.toString()
+        //         )
+        //     }
+        // },
+        // (error) => {
+        //     console.log('Login fail with error: ' + error);
+        // })
+        const {data, error} = await superBase.auth.signInWithOAuth({
+            provider: 'facebook'
         })
+        await Linking.openURL(data.url);
     }
 
     const forgotPassword = async () => {
@@ -58,7 +62,7 @@ export const LoginScreen = ({navigation: navigation}) => {
 
     const login = async () => {
         setLoading(true);
-        let { data, error } = await superBase.auth.signInWithPassword({
+        let { data, error } = await superBase.auth.signInWithOAuth({
             email: loginUsername,
             password: loginPassword
         });
@@ -86,7 +90,7 @@ export const LoginScreen = ({navigation: navigation}) => {
                 overlayColor={'rgba(59,64,78,0.8)'}
             />
             <View style={{alignItems: 'center'}}>
-                <Image source={require('../../../assets/favicon.png')} width={40} height={40} />
+                <Image source={require('../../../assets/icon.png')} style={{borderRadius: 24, height: 100, marginVertical: 10, width: 100}} />
                 <Text style={{color: 'white', fontFamily: 'Rubik-Bold', fontSize: 32, fontWeight: 'bold', textAlign: 'center'}}>Quiz App</Text>
                 <Text style={{color: '#b1b3b9', fontFamily: 'Rubik-Light', fontSize: 15, textAlign: 'center'}}>Login to continue</Text>
             </View>
@@ -101,7 +105,7 @@ export const LoginScreen = ({navigation: navigation}) => {
                 </View>
             </View>
             <>
-                <Text style={{borderBottomColor: '#b1b3b9', borderBottomWidth: 2, color: '#b1b3b9', fontFamily: 'Rubik-Regular', fontSize: 14, textAlign: 'right', textDecorationStyle: 'solid', textDecorationColor: '#b1b3b9', textDecorationLine: 'underline', width: '90%'}} onPress={forgotPassword}>Forgot Password?</Text>
+                {/*<Text style={{borderBottomColor: '#b1b3b9', borderBottomWidth: 2, color: '#b1b3b9', fontFamily: 'Rubik-Regular', fontSize: 14, textAlign: 'right', textDecorationStyle: 'solid', textDecorationColor: '#b1b3b9', textDecorationLine: 'underline', width: '90%'}} onPress={forgotPassword}>Forgot Password?</Text>*/}
                 <TouchableOpacity style={{alignSelf: 'center', borderColor: "white", borderRadius: 25, borderWidth: 1, marginHorizontal: 24, marginVertical: 12, padding: 12, width: '80%'}} onPress={login}>
                     <Text style={{color: 'white', fontFamily: 'Rubik-Medium', fontSize: 14, fontWeight: 'bold', textAlign: 'center', width: '100%'}}>Login</Text>
                 </TouchableOpacity>
@@ -111,10 +115,10 @@ export const LoginScreen = ({navigation: navigation}) => {
                     <Text style={{color: 'white', fontFamily: 'Rubik-Medium', fontSize: 12, fontWeight: 'bold', marginVertical: 12, textAlign: 'center', width: '100%'}} onPress={createAccount}>Create new account</Text>
                 {/*</TouchableOpacity>*/}
             </>
-            <TouchableOpacity onPress={continueWithFacebook} style={{alignContent: 'center', alignItems: 'center', backgroundColor: '#3577d4', bottom: 0, display: 'flex', flexDirection: 'row', left: 0, marginVertical: 24, padding: 12, position: 'absolute', width: '100%'}}>
-                <Icon name="facebook-square" type="font-awesome" color="white" />
-                <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold', textAlign: 'center', width: '100%'}}>Login with Facebook</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity onPress={continueWithFacebook} style={{alignContent: 'center', alignItems: 'center', backgroundColor: '#3577d4', bottom: 0, display: 'flex', flexDirection: 'row', left: 0, marginVertical: 24, padding: 12, position: 'absolute', width: '100%'}}>*/}
+            {/*    <Icon name="facebook-square" type="font-awesome" color="white" />*/}
+            {/*    <Text style={{color: 'white', fontSize: 15, fontWeight: 'bold', textAlign: 'center', width: '100%'}}>Login with Facebook</Text>*/}
+            {/*</TouchableOpacity>*/}
         </View>
     )
 }

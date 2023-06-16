@@ -1,0 +1,100 @@
+[
+  {
+    "question": "Which actor is most famous for his role in the X-Men series as Wolverine?",
+    "choices": {
+      "A": "James McAvoy",
+      "B": "James Marsden",
+      "C": "Hugh Jackman"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "As of 2021, who is the most successful actor or actress with 4 times winning the Academy Awards, also known as Oscars?",
+    "choices": {
+      "A": "Meryl Streep",
+      "B": "Katharine Hepburn",
+      "C": "Jack Nicolson"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following movies features Leonardo DiCaprio as the leading actor?",
+    "choices": {
+      "A": "The Wolf of Wall Street (2013)",
+      "B": "The Social Network (2010)",
+      "C": "La La Land (2016)"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "In the movie The Departed (2006), what is the job of Frank Costello, who was played by Jack Nicholson?",
+    "choices": {
+      "A": "A mafia boss",
+      "B": "A police officer",
+      "C": "A private detective"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "Which actress played Rose Calvert in the legendary romance Titanic (1997)?",
+    "choices": {
+      "A": "Angelina Jolie",
+      "B": "Nicole Kidman",
+      "C": "Kate Winslet"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "Bill Skarsgård, who is most known for his role as Pennywise the Dancing Clown in the horror film It, comes from which European country?",
+    "choices": {
+      "A": "Norway",
+      "B": "Sweden",
+      "C": "Denmark"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Which classic actor was known as the King of Hollywood in the 30s and played Rhett Butler in the 1939 movie Gone With the Wind?",
+    "choices": {
+      "A": "Orson Welles",
+      "B": "Clark Gable",
+      "C": "Rock Hudson"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "Which of the following actors and actresses married to each other?",
+    "choices": {
+      "A": "Kit Harington and Jennifer Garner",
+      "B": "Tom Cruise and Nicole Kidman",
+      "C": "Channing Tatum and Angelina Jolie"
+    },
+    "answer": "B"
+  },
+  {
+    "question": "The actor Alec Baldwin won an Emmy in 2017 for portraying which U.S. President on “Saturday Night Live”?",
+    "choices": {
+      "A": "Bill Clinton",
+      "B": "George W. Bush",
+      "C": "Donald Trump"
+    },
+    "answer": "C"
+  },
+  {
+    "question": "The Australian actor Chris Hemsworth is known for playing which superhero in the Marvel Cinematic Universe?",
+    "choices": {
+      "A": "Thor",
+      "B": "Iron Man",
+      "C": "Captain America"
+    },
+    "answer": "A"
+  },
+  {
+    "question": "",
+    "choices": {
+      "A": "",
+      "B": "",
+      "C": ""
+    }
+  }
+]
