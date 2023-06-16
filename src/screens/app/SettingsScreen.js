@@ -1,12 +1,25 @@
-import {StyleSheet, Text, Touchable, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, Touchable, TouchableOpacity, TouchableWithoutFeedback, View} from "react-native";
 import {Icon} from "@rneui/base";
 import {DrawerActions} from "@react-navigation/native";
 import {useEffect, useState} from "react";
 
 import { useDrawerStatus } from '@react-navigation/drawer';
 import {superBase} from "../../services/superBase";
+import {dbSync} from "../../services/dbSync";
+import DB from "../../realm/DB";
+import {navigate} from "../../../App";
+import Spinner from "react-native-loading-spinner-overlay";
 
 export const SettingsScreen = ({ navigation }) => {
+
+    const [loading, setLoading] = useState(false);
+    const [loadingText, setLoadingText] = useState("Processing");
+
+    useEffect(() => {
+        if (!loading) {
+            setLoadingText("Processing");
+        }
+    }, [loading])
 
     useEffect(() => {
         navigation.setOptions({
@@ -19,55 +32,119 @@ export const SettingsScreen = ({ navigation }) => {
     }, [])
 
     const logout = () => {
-        superBase.auth.signOut();
+        setLoadingText("Logging out");
+        setLoading(true);
+        setTimeout(() => {
+            superBase.auth.signOut();
+        }, 500)
+    }
+
+    const updateDb = async () => {
+        setLoadingText("Updating Quiz Database");
+        setLoading(true);
+
+        DB.beginTransaction()
+        DB.deleteAll();
+        DB.commitTransaction();
+
+        const loadRemoteQuizes = async () => {
+            console.log('fetch remote quizes');
+            const {data, error} = await superBase.from('quizes')
+                .select('*');
+            return data;
+        }
+
+        loadRemoteQuizes().then((resp) => {
+            resp.forEach(quiz => {
+                DB.write(() => {
+                    DB.create("Quiz", {
+                        id: quiz.id,
+                        name: quiz.name,
+                        description: quiz.description,
+                        unlockCost: quiz.unlockCost,
+                        unlocked: quiz.unlocked,
+                        image: quiz.image,
+                    })
+                })
+            });
+            setTimeout(() => {
+                setLoading(false);
+                navigate("QuizList");
+            }, 1000);
+        })
     }
 
     return (
         <>
+            <Spinner
+                visible={loading}
+                textContent={loadingText}
+                textStyle={{color: 'white'}}
+                overlayColor={'rgba(59,64,78,0.8)'}
+            />
             <View style={styles.settingsContainer}>
                 <>
                     <Text style={styles.settingsSectionTitle}>ACCOUNT</Text>
                     <View style={styles.settingsSectionContainer}>
-                        <TouchableOpacity style={styles.settingsItem}>
-                            <Icon name="envelope" type="font-awesome" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
-                            <View style={styles.settingsItemTextContainer}>
-                                <Text style={styles.settingsItemTitle}>Update Email Address</Text>
-                                <Text style={styles.settingsItemSubTitle}>hannafields@email.com</Text>
+                        <TouchableWithoutFeedback>
+                            <View style={[styles.disabled, styles.settingsItem]}>
+                                <Icon name="envelope" type="font-awesome" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
+                                <View style={styles.settingsItemTextContainer}>
+                                    <Text style={styles.settingsItemTitle}>Update Email Address</Text>
+                                    <Text style={styles.settingsItemSubTitle}>hannafields@email.com</Text>
+                                </View>
+                                <View style={styles.settingsItemChevronContainer}>
+                                    <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                                </View>
                             </View>
-                            <View style={styles.settingsItemChevronContainer}>
-                                <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback>
+                            <View style={[styles.disabled, styles.settingsItem]}>
+                                <Icon name="key" type="font-awesome-5" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
+                                <View style={styles.settingsItemTextContainer}>
+                                    <Text style={styles.settingsItemTitle}>Change Password</Text>
+                                    <Text style={styles.settingsItemSubTitle}>Last changed 2 weeks ago</Text>
+                                </View>
+                                <View style={styles.settingsItemChevronContainer}>
+                                    <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                                </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.settingsItem}>
-                            <Icon name="key" type="font-awesome-5" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
-                            <View style={styles.settingsItemTextContainer}>
-                                <Text style={styles.settingsItemTitle}>Change Password</Text>
-                                <Text style={styles.settingsItemSubTitle}>Last changed 2 weeks ago</Text>
-                            </View>
-                            <View style={styles.settingsItemChevronContainer}>
-                                <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
-                            </View>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
                     </View>
                 </>
                 <>
                     <Text style={styles.settingsSectionTitle}>OTHER</Text>
                     <View style={styles.settingsSectionContainer}>
-                        <TouchableOpacity style={styles.settingsItem}>
-                            <Icon name="bell" type="font-awesome" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
-                            <View style={styles.settingsItemTextContainer}>
-                                <Text style={styles.settingsItemTitle}>Push Notifications</Text>
-                                <Text style={styles.settingsItemSubTitle}>For messages, Badges etc.</Text>
+                        <TouchableWithoutFeedback>
+                            <View style={[styles.disabled, styles.settingsItem]}>
+                                <Icon name="bell" type="font-awesome" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
+                                <View style={styles.settingsItemTextContainer}>
+                                    <Text style={styles.settingsItemTitle}>Push Notifications</Text>
+                                    <Text style={styles.settingsItemSubTitle}>For messages, Badges etc.</Text>
+                                </View>
+                                <View style={styles.settingsItemChevronContainer}>
+                                    <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                                </View>
                             </View>
-                            <View style={styles.settingsItemChevronContainer}>
-                                <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                        </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback>
+                            <View style={[styles.disabled, styles.settingsItem]}>
+                                <Icon name="facebook" type="font-awesome-5" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
+                                <View style={styles.settingsItemTextContainer}>
+                                    <Text style={styles.settingsItemTitle}>Connect Facebook Account</Text>
+                                    <Text style={styles.settingsItemSubTitle}>Allows quick login & sharing</Text>
+                                </View>
+                                <View style={styles.settingsItemChevronContainer}>
+                                    <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
+                                </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.settingsItem}>
-                            <Icon name="facebook" type="font-awesome-5" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
+                        </TouchableWithoutFeedback>
+                        <TouchableOpacity style={styles.settingsItem} onPress={updateDb}>
+                            <Icon name="database" type="font-awesome-5" color="#00e4d4" style={styles.settingsItemIcon} size={24} />
                             <View style={styles.settingsItemTextContainer}>
-                                <Text style={styles.settingsItemTitle}>Connect Facebook Account</Text>
-                                <Text style={styles.settingsItemSubTitle}>Allows quick login & sharing</Text>
+                                <Text style={styles.settingsItemTitle}>Update Database</Text>
+                                <Text style={styles.settingsItemSubTitle}>Current Version: 26-5-23</Text>
                             </View>
                             <View style={styles.settingsItemChevronContainer}>
                                 <Icon name="chevron-right" type="font-awesome" color="#00e4d4" style={styles.settingsItemChevronIcon} size={12} />
@@ -108,6 +185,9 @@ const styles = StyleSheet.create({
         height: 80,
         marginVertical: 10,
         width: '100%'
+    },
+    disabled: {
+        opacity: 0.3
     },
     settingsItemIcon: {
         borderColor: '#00e4d4',
