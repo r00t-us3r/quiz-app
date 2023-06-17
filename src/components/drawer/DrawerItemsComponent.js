@@ -37,6 +37,12 @@ export const DrawerItemsComponent = () => {
             title: 'Earn Coins',
             active: (route === 'EarnCoins')
         },
+        {
+            icon: 'fa-solid fa-question',
+            slug: 'UploadActorQuestions',
+            title: 'Upload Actor Questions',
+            active: (route === 'UploadActorQuestions')
+        }
     ]
 
     console.log(route);

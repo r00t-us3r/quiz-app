@@ -11,6 +11,7 @@ import {EarnCoinsScreen} from "../screens/app/EarnCoinsScreen";
 import {QuizesScreen} from "../screens/app/QuizesScreen";
 import {QuizScreen} from "../screens/app/QuizScreen";
 import {Text, View} from "react-native";
+import {UploadActorsQuestions} from "../screens/admin/UploadActorsQuestions";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -30,6 +31,10 @@ export const AppStack = () => {
             <Drawer.Screen component={NotificationsScreen} name="Notifications" options={{headerTitle: 'Notifications'}} />
             <Drawer.Screen component={ProfileScreen} name="Profile" options={{headerTitle: 'Profile'}} />
             <Drawer.Screen component={SettingsScreen} name="Settings" options={{headerTitle: 'Settings'}} />
+
+
+            <Drawer.Screen component={UploadActorsQuestions} name={"UploadActorQuestions"} options={{headerTitle: 'Upload Actor Questions'}} />
+
 
             {/* View Chat */}
             <Drawer.Screen component={ChatViewScreen} name="Chat" options={{headerTitle: 'Chat List'}} />
